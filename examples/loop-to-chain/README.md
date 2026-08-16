@@ -1,6 +1,6 @@
 # Conventional vs fluentfp: Code Shape, Complexity, and Bug Surface
 
-**Filter/map/fold rewrites drop branch-point complexity 95% and code 47% in pure data pipelines; 26% and 12% in typical Go modules where many loops aren't convertible.** Two pairs of files below show this with side-by-side visualizations, scc-measured numbers, and per-line attributions of the loop-mechanics bug classes the rewrite makes structurally absent.
+**Filter/map/fold rewrites drop branch-point complexity 95% and code 47% in pure data pipelines; in a mixed-code example where many loops aren't convertible, 26% and 12%.** Two pairs of files below show this with side-by-side visualizations, scc-measured numbers, and per-line attributions of the loop-mechanics bug classes the rewrite makes structurally absent.
 
 The visual shape change is dramatic when every loop converts (best case, immediately below) and subtle when only a fraction does (typical case, further down). In the typical case the value is less about visible shape and more about the bugs that become unwritable and the branch points that disappear — both adjacent to code shape rather than strictly under it.
 
@@ -28,7 +28,7 @@ When every operation fits filter/map/fold, complexity drops from 57 to 3 — eve
 
 ## Mixed code (typical case)
 
-Mirrors a typical production ratio: ~36% of operations are filter/map/fold-convertible; the rest stay as conventional loops with break/continue/error returns.
+This fixture mixes convertible and inconvertible patterns — ~36% of functions are filter/map/fold-convertible; the rest stay as conventional loops with break/continue/error returns.
 
 ![Code-shape heatmap comparing the conventional loop implementation (left) and its mixed fluentfp rewrite (right). The differential is subtle here — only four of eleven functions converted — but the orange/yellow stretches showing nested if/for/append patterns are visibly thinner on the right.](../../images/code-shape-comparison.svg)
 
@@ -38,7 +38,7 @@ Mirrors a typical production ratio: ~36% of operations are filter/map/fold-conve
 | [fluentfp.go](fluentfp.go) | 80 | 17 |
 | **Reduction** | **−12%** | **−26%** |
 
-The code-shape change is modest — 12% fewer lines, four converted functions out of eleven, a small stairstep flattened where each conversion sat. The complexity reduction is sharper (26%, branch points only in the convertible code path), and the bug-class elimination sharper still (next subsection). For typical Go modules — the realistic case — the value of fluentfp lives in correctness and branch-point reduction more than in visible shape. Complexity is scc's count of branch and loop tokens; see [methodology.md § F](../../methodology.md#f-code-metrics-tool-scc).
+The code-shape change is modest — 12% fewer lines, four converted functions out of eleven, a small stairstep flattened where each conversion sat. The complexity reduction is sharper (26%, branch points only in the convertible code path), and the bug-class elimination sharper still (next subsection). For code with a similar mix, the value of fluentfp lives in correctness and branch-point reduction more than in visible shape. Complexity is scc's count of branch and loop tokens; see [methodology.md § F](../../methodology.md#f-code-metrics-tool-scc).
 
 ### Error surfaces reduced — and preserved
 

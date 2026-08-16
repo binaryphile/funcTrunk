@@ -111,7 +111,7 @@ The correlation holds across both cases. In the mixed-code example (36% converti
 
 ### Typical Case: Mixed Code
 
-Most modules mix FP-convertible patterns with code that should stay as loops. This example intentionally mirrors a typical production ratio—36% convertible, 64% conventional loops.
+Most modules mix FP-convertible patterns with code that should stay as loops. This fixture illustrates that mix: 36% convertible, 64% conventional loops.
 
 ![Code-shape heatmap: conventional Go on the left, fluentfp on the right. Each line is a colored block; width = code volume, x-offset = indent depth, color = nesting level (plasma palette).](images/code-shape-comparison.svg)
 

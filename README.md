@@ -206,7 +206,7 @@ If you're counting nanoseconds in a hot path, fuse it in a loop. Most loops aren
 
 | Codebase Type   | Code Reduction | Complexity Reduction |
 | --------------- | -------------- | -------------------- |
-| Mixed (typical) | 12%            | 26%                  |
+| Mixed (example) | 12%            | 26%                  |
 | Pure pipeline   | 47%            | 95%                  |
 
 *Individual loops see up to 6x line reduction. Codebase-wide averages are lower because not every line is a loop. Complexity measured via `scc`. See [methodology](methodology.md#f-code-metrics-tool-scc).*
